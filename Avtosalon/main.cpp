@@ -22,6 +22,7 @@ void printCollection(Array *salon)
     for(int i = 0; i < salon->getLen(); i++)
     {
         std::cout << "Record #" << i + 1 << ':' << '\n';
+        std::cout << salon->getCar(i).getName() << '\n';
         std::cout << salon->getCar(i).getLength() << "\n";
         std::cout << salon->getCar(i).getWidth() << "\n";
         std::cout << salon->getCar(i).getX() << "\n";
@@ -87,8 +88,8 @@ int main()
 
     // Тесты для коллекций
 
-    Array *salon1 = new Array(5, 10000, 500, 0, 0, 0);
-    assert(salon1->getLen() == 5); // Проверка конструктора инициализации
+    Array *salon1 = new Array(10000, 500, 0, 0, 0);
+    assert(salon1->getLen() == 0); // Проверка конструктора инициализации
 
     Array *salon2 = new Array(*salon1);
     assert(collectionEqual(salon1, salon2) == true); // Проверка конструктора копирования
@@ -98,12 +99,14 @@ int main()
     int len1 = salon1->getLen();
     salon1->push(cardef);
     assert(len1 + 1 == salon1->getLen()); // Проверка метода добавления объектов
-    salon1->deleteCars(len1 - 1);
+    salon1->deleteCars(salon1->getLen() - 1);
     assert(len1 == salon1->getLen()); // Проверка метода удаления объектов
 
     salon1->deleteAll();
     assert(salon1->getLen() == 0); // Проверка метода удаления всех объектов
 
+    salon2->push(cardef);
+    salon2->push(carparametr);
     printCollection(salon2);
 
     salon2->writeToFile("test.txt");
@@ -112,6 +115,8 @@ int main()
 
     delete salon1;
     delete salon2;
+
+    std::cout << "Tests are correct" << std::endl;
 
     return 0;
 }
