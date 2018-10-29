@@ -12,10 +12,10 @@ Array::Array()
     _coord._z = 0;
 }
 
-Array::Array(int size, double l, double w, double x, double y, double z)
+Array::Array(double l, double w, double x, double y, double z)
 {
-    _arr = new Cars[abs(size) + 10];
-    _len = abs(size);
+    _arr = new Cars[10];
+    _len = 0;
     _gabs._l = abs(l);
     _gabs._w = abs(w);
     _coord._x = abs(x);
@@ -104,25 +104,25 @@ void Array::readFromFile(std::string fileName)
             car.setName(string(buff));
 
             fin.getline(buff,50);
-            car.setAngle(int(buff));
+            car.setAngle(atof(buff));
 
             fin.getline(buff,50);
-            car.setDoor(int(buff));
+            car.setDoor(atof(buff));
 
             fin.getline(buff, 50);
-            car.setLength(int(buff));
+            car.setLength(atof(buff));
 
             fin.getline(buff, 50);
-            car.setWidth(int(buff));
+            car.setWidth(atof(buff));
 
             fin.getline(buff, 50);
-            car.setX(int(buff));
+            car.setX(atof(buff));
 
             fin.getline(buff, 50);
-            car.setY(int(buff));
+            car.setY(atof(buff));
 
             fin.getline(buff, 50);
-            car.setZ(int(buff));
+            car.setZ(atof(buff));
 
             push(car);
         }
@@ -135,14 +135,16 @@ void Array::writeToFile(std::string fileName) const
     std::ofstream fout(fileName);
     for(int i = 0; i <_len; i++)
     {
-        fout << _arr[i].getName() << '\n';  // Она нужна?
-        fout << _arr[i].getAngle() << '\n';  // Она нужна?
-        fout << _arr[i].getDoor() << '\n';  // Она нужна?
+        if (i != 0)
+            fout << '\n';
+        fout << _arr[i].getName() << '\n';
+        fout << _arr[i].getAngle() << '\n';
+        fout << _arr[i].getDoor() << '\n';
         fout << _arr[i].getLength() << '\n';
         fout << _arr[i].getWidth() << '\n';
         fout << _arr[i].getX() << "\n";
         fout << _arr[i].getY() << "\n";
-        fout << _arr[i].getZ() << "\n";
+        fout << _arr[i].getZ();
     }
     fout.close();
 }
