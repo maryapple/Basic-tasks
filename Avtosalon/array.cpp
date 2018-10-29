@@ -50,7 +50,7 @@ void Array::push(Cars car)
             _arr[i] = arr2[i];
         delete arr2;
     }
-    _len ++;
+    _arr[_len++]  = car;
 }
 
 bool Array::setCars(int position, Cars car)
