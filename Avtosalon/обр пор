@@ -1,0 +1,62 @@
+// поставить в обратном порядки элементы главной диагонали матрицы, если сумма чет эл под ней положит
+
+const
+    lmax = 10;
+type
+    matr = array[1..lmax, 1..lmax] of integer;
+var A: matr;
+    flag: boolean;
+    n, m: integer;
+procedure input(var A: matr; var n, m: integer);
+var i, j: integer;
+begin
+    repeat
+        read(n, m);
+    until (n>0) and (n <= lmax) and (m>0) and (m <= lmax);
+    for i := 1 to n do
+        for j := 1 to m do
+            read(A[i, j]);
+end;
+
+function F(var A: matr; n, m: integer): boolean;
+var i, j, sum,  c, len: integer;
+    flag : boolean;
+begin
+    sum := 0;
+    flag := false;
+    for i := 2 to n do
+        for j := 1 to i-1 do
+            if (A[i, j] mod 2 = 0) then
+                sum := sum + A[i, j];
+    if (sum > 0) then
+    begin
+        len := min(n, m);
+        flag := true;
+        for i := 1 to trunc(len/2) do
+        begin
+            c := A[i, i];
+            A[i, i] := A[len - i + 1, n - i + 1];
+            A[n - i + 1, n - i + 1] := c;
+        end;
+    end;
+    F := flag;
+end;
+
+procedure output(var A: matr; n, m: integer);
+var i, j: integer;
+begin
+    for i := 1 to n do
+    begin
+        for j := 1 to m do
+            write(A[i, j], ' ');
+    end;
+end;
+
+begin
+    input(A, n, m);
+    flag := F(A, n, m);
+    if flag then
+        output(A ,n, m)
+    else 
+        writeln('no change');
+end.
